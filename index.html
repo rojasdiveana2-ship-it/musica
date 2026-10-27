@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950 text-slate-100 selection:bg-red-600 selection:text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuel AA | Real Hasta La Muerte - Spotify Red Edition</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        spotify: {
+                            base: '#09090b',
+                            card: '#121215',
+                            hover: '#1e1e24',
+                            accent: '#ff0000',
+                            red: '#e50914',
+                            darkred: '#7f0000',
+                            gold: '#ffd700',
+                            light: '#18181f'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Syne', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Estilos CSS Separados -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-spotify-base text-slate-100 font-sans antialiased h-full flex flex-col overflow-x-hidden select-none">
+
+    <!-- Header / Barra de Navegación -->
+    <header class="h-20 border-b border-red-900/30 bg-spotify-base/90 backdrop-blur-xl sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-600 to-red-900 flex items-center justify-center red-glow">
+                <i class="fa-brands fa-spotify text-white text-2xl"></i>
+            </div>
+            <div>
+                <h1 class="font-display font-black text-2xl tracking-wider flex items-center gap-2">
+                    ANUEL<span class="text-red-600 drop-shadow-[0_0_10px_rgba(229,9,20,0.8)]">AA</span>
+                </h1>
+                <p class="text-[10px] text-red-400 font-bold tracking-widest uppercase">Real Hasta La Muerte • Spotify Red Edition</p>
+            </div>
+        </div>
+
+        <!-- Buscador de canciones -->
+        <div class="flex items-center gap-3">
+            <div class="relative w-52 md:w-72">
+                <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-red-500/70 text-sm"></i>
+                <input type="text" id="search-input" placeholder="Buscar canciones o álbumes..." 
+                       class="w-full bg-white/5 border border-red-900/40 rounded-full py-2 pl-10 pr-4 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition">
+            </div>
+        </div>
+    </header>
+
+    <!-- Banner Hero del Artista -->
+    <div class="w-full gradient-red-header p-6 md:p-8 flex flex-col md:flex-row items-center md:items-end gap-6 border-b border-red-950/50">
+        <div class="w-36 h-36 md:w-44 md:h-44 rounded-2xl overflow-hidden shadow-2xl red-glow-lg border-2 border-red-600/40 flex-shrink-0">
+            <img id="hero-cover" src="https://m.media-amazon.com/images/I/81xUe6VmsxL._UF1000,1000_QL80_.jpg" alt="Portada Álbum" class="w-full h-full object-cover">
+        </div>
+        <div class="flex-1 text-center md:text-left">
+            <div class="flex items-center justify-center md:justify-start gap-2 text-xs text-red-400 font-extrabold uppercase tracking-widest mb-2">
+                <i class="fas fa-certificate text-red-500"></i> ARTISTA VERIFICADO
+            </div>
+            <h1 class="text-3xl md:text-6xl font-black font-display text-white tracking-tight mb-2">ANUEL AA</h1>
+            <p class="text-xs md:text-sm text-slate-300 max-w-xl font-medium">Escucha la discografía completa de la leyenda del Trap Latino: <span class="text-red-400 font-bold">Real Hasta La Muerte, Emmanuel, Los Dioses, LLNM</span> y más.</p>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal de la App -->
+    <div class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 overflow-hidden">
+        
+        <!-- Columna Izquierda: Selección de Álbumes y Lista de Pistas -->
+        <aside class="lg:col-span-4 flex flex-col gap-6 overflow-hidden">
+            
+            <!-- Carrusel / Grid de Álbumes -->
+            <div class="bg-spotify-card rounded-3xl p-5 border border-red-900/20 flex flex-col shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-display font-black text-sm uppercase tracking-wider flex items-center gap-2 text-red-500">
+                        <i class="fas fa-compact-disc text-base"></i> Álbumes
+                    </h2>
+                    <span id="album-count" class="text-[10px] text-red-300 font-bold bg-red-950/60 px-3 py-1 rounded-full border border-red-800/40">5 Álbumes</span>
+                </div>
+
+                <!-- Grid de Álbumes -->
+                <div id="albums-container" class="flex lg:grid lg:grid-cols-2 gap-3 overflow-x-auto custom-scroll pb-2 lg:pb-0">
+                    <!-- Los álbumes se renderizan dinámicamente desde JavaScript -->
+                </div>
+            </div>
+
+            <!-- Lista de Canciones -->
+            <div class="bg-spotify-card rounded-3xl p-5 border border-red-900/20 flex-1 flex flex-col min-h-[360px] overflow-hidden shadow-xl">
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-white/5">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-music text-red-500"></i>
+                        <h2 class="font-display font-bold text-sm text-white" id="playlist-title">Pistas de Reproducción</h2>
+                    </div>
+                    <button onclick="filterAlbum('all')" class="text-[11px] text-red-500 hover:text-red-400 font-bold uppercase tracking-wider">
+                        Ver Todos
+                    </button>
+                </div>
+
+                <!-- Lista de Canciones -->
+                <div id="playlist-container" class="flex-1 overflow-y-auto custom-scroll space-y-2 pr-1">
+                    <!-- Pistas renderizadas desde JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Columna Derecha: Reproductor Principal y Ecualizador Studio -->
+        <main class="lg:col-span-8 flex flex-col gap-6 overflow-y-auto custom-scroll">
+            
+            <!-- Tarjeta Principal del Reproductor -->
+            <div class="bg-gradient-to-b from-spotify-light to-spotify-card rounded-3xl p-6 md:p-8 relative overflow-hidden flex flex-col md:flex-row items-center gap-8 shadow-2xl border border-red-900/30">
+                <!-- Luz Neón Ambiental de Fondo -->
+                <div id="ambient-glow" class="absolute -top-32 -left-32 w-96 h-96 bg-red-600/25 rounded-full blur-3xl pointer-events-none transition-all duration-700"></div>
+
+                <!-- Portada e Indicador en Vivo -->
+                <div class="relative group flex-shrink-0">
+                    <div id="cover-wrapper" class="w-52 h-52 sm:w-64 sm:h-64 rounded-2xl overflow-hidden shadow-2xl relative border-2 border-red-600/30 red-glow">
+                        <img id="player-cover" src="" alt="Portada del Álbum" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                            <button onclick="togglePlay()" class="w-16 h-16 rounded-full bg-red-600 text-white flex items-center justify-center shadow-xl red-glow hover:scale-110 transition">
+                                <i id="cover-play-icon" class="fas fa-play text-2xl ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Badge On-Air -->
+                    <div id="vinyl-badge" class="absolute -bottom-3 -right-3 bg-red-600 border-2 border-black p-2.5 rounded-full shadow-2xl hidden">
+                        <i class="fas fa-fire text-white text-xs animate-pulse"></i>
+                    </div>
+                </div>
+
+                <!-- Detalles de la Canción y Controles -->
+                <div class="flex-1 w-full flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span id="player-album" class="text-[10px] uppercase tracking-widest font-extrabold text-red-400 bg-red-950/80 border border-red-800/50 px-3 py-1 rounded-full">
+                                ÁLBUM
+                            </span>
+                            <div class="flex items-center gap-3">
+                                <button id="btn-favorite" onclick="toggleFavorite()" class="text-slate-400 hover:text-red-500 transition p-1">
+                                    <i class="far fa-heart text-2xl"></i>
+                                </button>
+                                <button id="btn-download" onclick="downloadCurrentTrack()" title="Descargar Canción MP3" class="text-slate-400 hover:text-red-400 transition p-1">
+                                    <i class="fas fa-arrow-down-long text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h2 id="player-title" class="font-display text-2xl sm:text-4xl font-black text-white truncate drop-shadow-md">Título de Canción</h2>
+                        <p id="player-artist" class="text-red-400 text-base font-bold mb-4">Anuel AA</p>
+                    </div>
+
+                    <!-- Espectro de Audio Canvas -->
+                    <div class="w-full h-16 bg-black/60 rounded-2xl overflow-hidden mb-4 border border-red-900/30 relative">
+                        <canvas id="visualizer-canvas" class="w-full h-full"></canvas>
+                    </div>
+
+                    <!-- Pista Lineal de Progreso -->
+                    <div class="space-y-2 mb-4">
+                        <div class="relative group cursor-pointer" id="progress-container">
+                            <input type="range" id="progress-bar" value="0" min="0" max="100" class="w-full h-2 rounded-lg bg-white/10 cursor-pointer">
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 font-mono font-medium">
+                            <span id="time-current">00:00</span>
+                            <span id="time-duration">00:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Control Principal -->
+                    <div class="flex items-center justify-between">
+                        <!-- Reproducción Aleatoria (Shuffle) -->
+                        <button id="btn-shuffle" onclick="toggleShuffle()" title="Modo Aleatorio" class="p-3 text-slate-400 hover:text-white transition rounded-full">
+                            <i class="fas fa-random text-base"></i>
+                        </button>
+
+                        <!-- Anterior / Play-Pause / Siguiente -->
+                        <div class="flex items-center gap-4">
+                            <button onclick="prevTrack()" class="p-3 text-slate-300 hover:text-red-500 transition rounded-full hover:bg-white/5">
+                                <i class="fas fa-step-backward text-xl"></i>
+                            </button>
+                            <button id="btn-play" onclick="togglePlay()" class="w-16 h-16 rounded-full bg-red-600 hover:bg-red-500 text-white shadow-2xl red-glow flex items-center justify-center hover:scale-105 transition active:scale-95">
+                                <i class="fas fa-play text-2xl ml-1"></i>
+                            </button>
+                            <button onclick="nextTrack()" class="p-3 text-slate-300 hover:text-red-500 transition rounded-full hover:bg-white/5">
+                                <i class="fas fa-step-forward text-xl"></i>
+                            </button>
+                        </div>
+
+                        <!-- Modo Repetición -->
+                        <button id="btn-repeat" onclick="toggleRepeat()" title="Modo Repetición" class="p-3 text-slate-400 hover:text-white transition rounded-full relative">
+                            <i class="fas fa-redo text-base"></i>
+                            <span id="repeat-badge" class="absolute top-1 right-1 text-[8px] bg-red-600 text-white font-bold rounded-full w-4 h-4 flex items-center justify-center hidden">1</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ecualizador Biquad de 5 Bandas -->
+            <div class="bg-spotify-card rounded-3xl p-6 border border-red-900/20 shadow-xl">
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="p-3 bg-red-600/20 border border-red-600/40 rounded-2xl text-red-500">
+                            <i class="fas fa-sliders-h text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold text-base text-white">Ecualizador Biquad Studio</h3>
+                            <p class="text-xs text-slate-400">Audio optimizado estilo Trap Latino & Perreo</p>
+                        </div>
+                    </div>
+
+                    <!-- Presets y Encendido -->
+                    <div class="flex items-center gap-3">
+                        <select id="eq-presets" onchange="applyPreset(this.value)" class="bg-black/80 border border-red-900/50 text-xs text-slate-200 rounded-xl px-3.5 py-2 focus:outline-none focus:border-red-500 font-bold">
+                            <option value="trap">Preset: Trap Latino (Anuel)</option>
+                            <option value="reggaeton">Reggaetón Perreo</option>
+                            <option value="bass">Bass Boost (+Bajos)</option>
+                            <option value="flat">Plano (Flat)</option>
+                            <option value="vocal">Voz / Acapella</option>
+                        </select>
+                        <button id="btn-eq-power" onclick="toggleEQPower()" class="bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-md red-glow">
+                            <i class="fas fa-power-off"></i> <span id="eq-status-text">ON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sliders Frecuenciales -->
+                <div class="grid grid-cols-5 gap-3 md:gap-6 text-center bg-black/40 p-4 rounded-2xl border border-white/5">
+                    <!-- Banda 60Hz -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-[10px] text-red-400 font-mono font-bold" id="eq-val-60">+4 dB</span>
+                        <div class="h-32 flex items-center justify-center">
+                            <input type="range" min="-12" max="12" value="4" step="0.5" id="eq-60" oninput="updateEQBand(0, this.value)" class="eq-slider h-28 -rotate-90 w-28 cursor-pointer">
+                        </div>
+                        <span class="text-xs font-bold text-slate-200">60Hz</span>
+                        <span class="text-[9px] text-slate-500 font-bold">Sub-Bass</span>
+                    </div>
+
+                    <!-- Banda 230Hz -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-[10px] text-red-400 font-mono font-bold" id="eq-val-230">+3 dB</span>
+                        <div class="h-32 flex items-center justify-center">
+                            <input type="range" min="-12" max="12" value="3" step="0.5" id="eq-230" oninput="updateEQBand(1, this.value)" class="eq-slider h-28 -rotate-90 w-28 cursor-pointer">
+                        </div>
+                        <span class="text-xs font-bold text-slate-200">230Hz</span>
+                        <span class="text-[9px] text-slate-500 font-bold">Bass</span>
+                    </div>
+
+                    <!-- Banda 910Hz -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-[10px] text-red-400 font-mono font-bold" id="eq-val-910">-1 dB</span>
+                        <div class="h-32 flex items-center justify-center">
+                            <input type="range" min="-12" max="12" value="-1" step="0.5" id="eq-910" oninput="updateEQBand(2, this.value)" class="eq-slider h-28 -rotate-90 w-28 cursor-pointer">
+                        </div>
+                        <span class="text-xs font-bold text-slate-200">910Hz</span>
+                        <span class="text-[9px] text-slate-500 font-bold">Mids</span>
+                    </div>
+
+                    <!-- Banda 4kHz -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-[10px] text-red-400 font-mono font-bold" id="eq-val-4000">+2 dB</span>
+                        <div class="h-32 flex items-center justify-center">
+                            <input type="range" min="-12" max="12" value="2" step="0.5" id="eq-4000" oninput="updateEQBand(3, this.value)" class="eq-slider h-28 -rotate-90 w-28 cursor-pointer">
+                        </div>
+                        <span class="text-xs font-bold text-slate-200">4kHz</span>
+                        <span class="text-[9px] text-slate-500 font-bold">Presence</span>
+                    </div>
+
+                    <!-- Banda 14kHz -->
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="text-[10px] text-red-400 font-mono font-bold" id="eq-val-14000">+5 dB</span>
+                        <div class="h-32 flex items-center justify-center">
+                            <input type="range" min="-12" max="12" value="5" step="0.5" id="eq-14000" oninput="updateEQBand(4, this.value)" class="eq-slider h-28 -rotate-90 w-28 cursor-pointer">
+                        </div>
+                        <span class="text-xs font-bold text-slate-200">14kHz</span>
+                        <span class="text-[9px] text-slate-500 font-bold">Treble</span>
+                    </div>
+                </div>
+
+                <!-- Control de Volumen -->
+                <div class="mt-6 pt-4 border-t border-white/5 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button onclick="toggleMute()" id="btn-volume" class="text-slate-400 hover:text-red-500 transition">
+                            <i class="fas fa-volume-up text-base"></i>
+                        </button>
+                        <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="0.8" class="w-36 h-1.5" oninput="setVolume(this.value)">
+                        <span id="volume-val" class="text-xs text-red-400 font-mono font-bold w-10">80%</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 text-[10px] text-red-400 bg-red-950/80 px-3.5 py-1.5 rounded-full border border-red-800/40">
+                        <i class="fas fa-circle-check text-red-500"></i>
+                        <span>WebAudio API Active</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Notificación Flotante Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-spotify-card border border-red-600/40 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300">
+        <i id="toast-icon" class="fas fa-circle-check text-red-500 text-lg"></i>
+        <span id="toast-message" class="text-xs font-bold">Notificación</span>
+    </div>
+
+    <!-- Elemento HTML Audio -->
+    <audio id="audio-element" crossorigin="anonymous"></audio>
+
+    <!-- Vinculación del Script JS Separado -->
+    <script src="app.js"></script>
+</body>
+</html>
